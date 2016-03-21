@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Sublime Text 2 &amp; 3 配置指南 (MSG.01) | DXY Biz Developer</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Sublime Text 2 &amp; 3 配置指南 (MSG.01)</h1><a id="logo" href="/.">DXY Biz Developer</a><p class="description">Make the better world</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Sublime Text 2 &amp; 3 配置指南 (MSG.01)</h1><div class="post-meta">Feb 26, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2016/02/sublime-text-setting-guide/" href="/2016/02/sublime-text-setting-guide/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p><strong>缘由：团队的同学都集体切换到 Mac 系统下进行开发，特此整理一系列 Mac 软件推荐与设置文章，本文是第一篇。</strong><br>建议直接查看阅读体验更加友好的 PDF 版本 -&gt; <a href="http://7x2ws5.com1.z0.glb.clouddn.com/pdf/sublime-text-setting-guide.pdf" target="_blank" rel="external">sublime-text-setting-guide.pdf</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><a href="https://www.sublimetext.com/" target="_blank" rel="external">Sublime Text</a> 是一套跨平台的文本编辑器，支持基于Python的插件。<a href="https://www.sublimetext.com/" target="_blank" rel="external">Sublime Text</a> 是专有软件，可通过包（Package）扩充本身的功能。大多数的包使用自由软件授权发布，并由社区建置维护。</p>
+<p><a href="https://www.sublimetext.com/" target="_blank" rel="external">Sublime Text</a> 的主要功能如下：</p>
+<ul>
+<li>“Go to anything”功能：可快速跳至文件、符号或行数。</li>
+<li>“Command palette”功能：弹性快捷键功能。</li>
+<li>多行选择功能：同时修改多内联容。</li>
+<li>基于 Python 语言的外挂 API。</li>
+<li>针对个别项目使用不同的编辑器设置。</li>
+<li>通过 JSON 文件自定义设置值。</li>
+<li>跨平台（Windows、Linux 和 Mac OS X）。</li>
+<li>兼容 TextMate 的语言标记语法。</li>
+</ul>
+<h2 id="Package-Control-Enabled"><a href="#Package-Control-Enabled" class="headerlink" title="Package Control Enabled"></a>Package Control Enabled</h2><p>得益于 <a href="https://www.sublimetext.com/" target="_blank" rel="external">Sublime Text</a> 强大的包（Package）管理系统，可以借此实现很多功能，但是默认是不开启的，需要手工开启。</p>
+<p>对映版本如下（先按下 ctrl<em>+</em>` 开启命令栏，填入以下命令且回车）</p>
+<h4 id="Sublime-Text-3"><a href="#Sublime-Text-3" class="headerlink" title="Sublime Text 3"></a>Sublime Text 3</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import urllib.request,os,hashlib; h = &apos;2915d1851351e5ee549c20394736b442&apos; + &apos;8bc59f460fa1548d1514676163dafc88&apos;; pf = &apos;Package Control.sublime-package&apos;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( &apos;http://packagecontrol.io/&apos; + pf.replace(&apos; &apos;, &apos;%20&apos;)).read(); dh = hashlib.sha256(by).hexdigest(); print(&apos;Error validating download (got %s instead of %s), please try manual install&apos; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &apos;wb&apos; ).write(by)</span><br></pre></td></tr></table></figure>
+<h4 id="Sublime-Text-2"><a href="#Sublime-Text-2" class="headerlink" title="Sublime Text 2"></a>Sublime Text 2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import urllib2,os,hashlib; h = &apos;2915d1851351e5ee549c20394736b442&apos; + &apos;8bc59f460fa1548d1514676163dafc88&apos;; pf = &apos;Package Control.sublime-package&apos;; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler()) ); by = urllib2.urlopen( &apos;http://packagecontrol.io/&apos; + pf.replace(&apos; &apos;, &apos;%20&apos;)).read(); dh = hashlib.sha256(by).hexdigest(); open( os.path.join( ipp, pf), &apos;wb&apos; ).write(by) if dh == h else None; print(&apos;Error validating download (got %s instead of %s), please try manual install&apos; % (dh, h) if dh != h else &apos;Please restart Sublime Text to finish installation&apos;)</span><br></pre></td></tr></table></figure>
+<p><strong>Via</strong></p>
+<ul>
+<li><a href="https://packagecontrol.io/installation#st3" target="_blank" rel="external">Package Control Install</a></li>
+<li><a href="https://packagecontrol.io/docs/usage" target="_blank" rel="external">Package Control 使用文档</a></li>
+</ul>
+<h2 id="通过-Terminal-启动-Sublime-Text"><a href="#通过-Terminal-启动-Sublime-Text" class="headerlink" title="通过 Terminal 启动 Sublime Text"></a>通过 Terminal 启动 Sublime Text</h2><p>简单的说，只需要把 Sublime Text 的执行文件加入系统环境变量就OK了，Sublime Text 本身也内置了一个 Shell 启动脚本，我们只需要把它软链 <code>/usr/local/bin</code> 目录就OK：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s &quot;/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl&quot; /usr/local/bin/subl</span><br></pre></td></tr></table></figure>
+<p>完成之后试一下在 Terminal 输入 <code>subl</code> 看看。</p>
+<p>PS：除了直接启动 Sublime Text 之外，还支持目录或者文件参数输入，假设你当前路径有个 <code>dev</code> 的目录，可以用 <code>subl dev</code> 来直接加载目录编辑。</p>
+<h2 id="Package-Recommend-List"><a href="#Package-Recommend-List" class="headerlink" title="Package Recommend List"></a>Package Recommend List</h2><ul>
+<li><p><a href="https://packagecontrol.io/packages/Emmet" target="_blank" rel="external">Emmet</a><br><code>Emmet 可以快速的编写 HTML、CSS 以及实现其他的功能。它根据当前文件的解析模式来判断要使用 HTML 语法还是 CSS 语法来解析。例如当前文件的后缀为 .html 那 Sublime text 2 就会用 HTML 的解析模式来解析高亮这个文件，Emmet 遇到里面的指令就会根据 HTML 的语法把它编译成 HTML 结构。如果是在一个 .c 的 C语言 文件中，你写出来的用于编译 HTML 指令就不会被 Emmet 识别编译。</code></p>
+</li>
+<li><p><a href="https://packagecontrol.io/packages/DocBlockr" target="_blank" rel="external">DocBlockr</a><br><code>可以自动生成PHPDoc风格的注释，支持大部分编程语言，如 Javascript、PHP、Java、C等。</code></p>
+</li>
+<li><p><a href="https://packagecontrol.io/packages/BracketHighlighter" target="_blank" rel="external">BracketHighlighter</a><br><code>高亮匹配 [] , () , {} , 等，对于快速定位代码段非常有用。</code></p>
+</li>
+<li><p><a href="https://packagecontrol.io/packages/ConvertToUTF8" target="_blank" rel="external">ConvertToUTF8</a><br><code>支持 GBK等编码的插件，可以解决部分中文乱码问题</code></p>
+</li>
+<li><p><a href="https://packagecontrol.io/packages/All%20Autocomplete" target="_blank" rel="external">All Autocomplete</a><br><code>从所有打开的文件中匹配查找的内容，对默认autocomplete的扩展</code></p>
+</li>
+</ul>
+<h2 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h2><p>以下纯属个人爱好推荐。</p>
+<ul>
+<li><p><a href="https://packagecontrol.io/packages/Theme%20-%20Flatland" target="_blank" rel="external">Theme - Flatland</a><br><code>比较推荐一个主题，谁用谁知道</code></p>
+</li>
+<li><p><a href="https://packagecontrol.io/packages/Themr" target="_blank" rel="external">Themr</a><br><code>主题快速切换工具</code></p>
+</li>
+<li><p>字体</p>
+<ul>
+<li><ol>
+<li><a href="http://7x2ws5.com1.z0.glb.clouddn.com/font/YaHei.Consolas.1.12.ttf" target="_blank" rel="external">YaHei Consolas Hybrid</a> 推荐指数：★★★★★</li>
+</ol>
+</li>
+<li><ol>
+<li><a href="http://7x2ws5.com1.z0.glb.clouddn.com/font/Microsoft%20YaHei%20Mono.ttf" target="_blank" rel="external">Microsoft YaHei Mono</a> 推荐指数：★★★★</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Preferences.sublime-settings</strong> (Base <a href="https://packagecontrol.io/packages/Theme%20-%20Flatland" target="_blank" rel="external">Theme - Flatland</a> and <a href="http://7x2ws5.com1.z0.glb.clouddn.com/font/YaHei.Consolas.1.12.ttf" target="_blank" rel="external">YaHei Consolas Hybrid</a> )<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"font_face"</span>: <span class="string">"YaHei Consolas Hybrid"</span>,</span><br><span class="line">	<span class="attr">"font_size"</span>: <span class="number">13</span>,</span><br><span class="line">	<span class="attr">"show_tab_close_buttons"</span>: <span class="literal">false</span>,</span><br><span class="line">	<span class="attr">"theme"</span>: <span class="string">"Flatland Dark.sublime-theme"</span>,</span><br><span class="line">	<span class="attr">"translate_tabs_to_spaces"</span>: <span class="literal">true</span>,</span><br><span class="line">	<span class="attr">"update_check"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>参考来源</strong>:</p>
+<ul>
+<li>Sublime Text：<a href="http://www.sublimetext.com/" target="_blank" rel="external">http://www.sublimetext.com/</a></li>
+<li>Forum：<a href="https://forum.sublimetext.com/" target="_blank" rel="external">https://forum.sublimetext.com/</a></li>
+<li>Package Control: <a href="https://packagecontrol.io/" target="_blank" rel="external">https://packagecontrol.io/</a></li>
+</ul>
+<p>待更新…</p>
+<p>—EOF–</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://DXY-Biz-Team.github.io/2016/02/sublime-text-setting-guide/" data-id="cim1w7n9f000154xumh3waun1" class="article-share-link">分享到</a><div class="tags"><a href="/tags/Mac-Software-Guide/">Mac Software Guide</a><a href="/tags/Tools/">Tools</a><a href="/tags/Developer/">Developer</a></div><div class="post-nav"><a href="/2016/03/things-about-npm-front-end-modules/" class="pre">关于 npm 前端模块的那点儿事儿（ES2015, Babel, UMD）</a><a href="/2016/01/hello-world/" class="next">Hello World</a></div><div id="disqus_thread"><script>var disqus_shortname = 'dxy-biz-developer';
+var disqus_identifier = '2016/02/sublime-text-setting-guide/';
+var disqus_title = 'Sublime Text 2 &amp; 3 配置指南 (MSG.01)';
+var disqus_url = 'http://DXY-Biz-Team.github.io/2016/02/sublime-text-setting-guide/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//dxy-biz-developer.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://DXY-Biz-Team.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Mac-Software-Guide/" style="font-size: 15px;">Mac Software Guide</a> <a href="/tags/Tools/" style="font-size: 15px;">Tools</a> <a href="/tags/Developer/" style="font-size: 15px;">Developer</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/ES2015/" style="font-size: 15px;">ES2015</a> <a href="/tags/ES6/" style="font-size: 15px;">ES6</a> <a href="/tags/UMD/" style="font-size: 15px;">UMD</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/03/things-about-npm-front-end-modules/">关于 npm 前端模块的那点儿事儿（ES2015, Babel, UMD）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/sublime-text-setting-guide/">Sublime Text 2 & 3 配置指南 (MSG.01)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/hello-world/">Hello World</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//dxy-biz-developer.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.dxy.cn" title="丁香园" target="_blank">丁香园</a><ul></ul><a href="http://dxy.com/" title="丁香医生" target="_blank">丁香医生</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">DXY Biz Developer.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-75363891-1','auto');ga('send','pageview');
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
