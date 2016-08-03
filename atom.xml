@@ -133,7 +133,7 @@
     <link href="http://DXY-Biz-Team.github.io/2016/04/biz-front-end-use-skill/"/>
     <id>http://DXY-Biz-Team.github.io/2016/04/biz-front-end-use-skill/</id>
     <published>2016-04-13T01:10:59.000Z</published>
-    <updated>2016-08-03T03:39:21.320Z</updated>
+    <updated>2016-08-03T03:44:29.431Z</updated>
     
     <content type="html">&lt;p&gt;本文主要是我入职以来在E-marketing项目中常用到的一些控件使用，兼容方法，交互效果的说明和使用方法，欢迎大家对本文进行更改或者补充，下文中所有&lt;code&gt;require()&lt;/code&gt;的类库均可在各个E-marketing项目中找到，可以直接copy到自己项目中使用。&lt;/p&gt;
 &lt;h1 id=&quot;目录&quot;&gt;&lt;a href=&quot;#目录&quot; class=&quot;headerlink&quot; title=&quot;目录&quot;&gt;&lt;/a&gt;目录&lt;/h1&gt;&lt;ol&gt;
