@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Chrome程序性能分析-来自于一次组内分享 | DXY Biz Developer</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Chrome程序性能分析-来自于一次组内分享</h1><a id="logo" href="/.">DXY Biz Developer</a><p class="description">Make The Better World</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Chrome程序性能分析-来自于一次组内分享</h1><div class="post-meta">Aug 15, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2016/08/chrome-performance-analysis-1/" href="/2016/08/chrome-performance-analysis-1/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>对于一次组内分享的整理，PPT资源放在了我的个人github pages上<a href="http://zanseven007.github.io/chrome-performance" target="_blank" rel="external">点击这里查看</a>（建议Timeline的时候使用隐身模式避免插件影响，快捷键command+shift+n）</p>
+<h1 id="Chrome-程序性能分析"><a href="#Chrome-程序性能分析" class="headerlink" title="Chrome 程序性能分析"></a>Chrome 程序性能分析</h1><h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><p>Network主要有5个视窗，分别有不同的功能：</p>
+<ul>
+<li><strong>Controls 工具栏</strong>：用来控制Network的功能及外观。</li>
+<li><strong>Filters 筛选栏</strong>：根据筛选条件筛选请求列表，按住command/ctrl键可多选。</li>
+<li><strong>Overviews 概览</strong>：资源被加载过来的时间线，如果多条时间线垂直堆叠，表示多个资源被并行加载。</li>
+<li><strong>Request Table 请求列表</strong>：该视窗列出了所有的资源请求，默认按时间顺序排序，点击某个资源，可以查看更详细的信息。</li>
+<li><strong>Summary 总览</strong>：汇总了请求数量，传输数据大小，加载时间等信息。</li>
+</ul>
+<p>默认情况下，Request Table 请求列表展示如下信息，当然，在请求列表的表头右键可以配置请求列表显示的内容。</p>
+<ul>
+<li><strong>Nam</strong>e：资源的名称。</li>
+<li><strong>Status</strong>：HTTP的状态码。</li>
+<li><strong>Type</strong>：资源的MIME类型。</li>
+<li><strong>Initiator</strong>：表示请求的上游，即发起者。Parser表示是HTML解析器发起的请求；Redirect表示是HTTP跳转发起的请求；Script表示是由脚本发起的请求；Other表示是由其他动作发起的请求，比如用户跳转或者在导航栏输入地址等。</li>
+<li><strong>Size</strong>：请求的大小，包括响应头和响应体的内容。</li>
+<li><strong>Time</strong>：请求的时间，从请求开始到请求完全结束。</li>
+<li><strong>Timeline</strong>：请求的时间线。</li>
+</ul>
+<p>浏览器拿到网页后加载过程</p>
+<ul>
+<li>解析HTML结构。</li>
+<li>加载外部脚本和样式表文件。</li>
+<li>解析并执行脚本代码。// 部分脚本会阻塞页面的加载</li>
+<li>DOM树构建完成。//DOMContentLoaded 事件</li>
+<li>加载图片等外部文件。</li>
+<li>页面加载完毕。//load 事件</li>
+</ul>
+<p>请求上下游</p>
+<p>按住Shift查看资源请求上下游<br>其中绿色请求表示common.js的上游请求，即谁触发了V20160804a.js请求，红色请求表示common.js的下游请求，即common.js又触发了什么请求。<br><img src="http://obw56kbo5.bkt.clouddn.com/pic.png" alt="上下游"></p>
+<p>Timeline可以重新排序，主要有如下几个维度。</p>
+<ul>
+<li><strong>Timline - Start Time</strong>：按请求的发起时间排序。</li>
+<li><strong>Timline - Response Time</strong>：按请求的响应时间排序。</li>
+<li><strong>Timline - End Time</strong>：按请求的结束时间排序。</li>
+<li><strong>Timline - Total Duration</strong>：按请求的总耗时排序，可以快捷的找出耗时最多的资源。</li>
+<li><strong>Timline - Latency</strong>：按请求的延迟排序，延迟是指请求发起的时间到响应开始的时间，可以快捷的找出请求等待时间最长（TTFB）的资源。</li>
+</ul>
+<p>强大的过滤器功能</p>
+<ul>
+<li><strong>domain</strong>：筛选出指定域名的请求，不仅支持自动补全，还支持*匹配。</li>
+<li><strong>has-response-header</strong>：筛选出包含指定响应头的请求。</li>
+<li><strong>is</strong>：通过is:running找出WebSocket请求。</li>
+<li><strong>larger-than</strong>：筛选出请求大于指定字节大小的请求，其中1000表示1k。</li>
+<li><strong>method</strong>：筛选出指定HTTP方法的请求，比如GET请求、POST请求等。</li>
+<li><strong>mime-type</strong>：筛选出指定文件类型的请求。</li>
+<li><strong>scheme</strong>：筛选出指定协议的请求，比如scheme:http、scheme:https。</li>
+<li><strong>set-cookie-domain</strong>：筛选出指定cookie域名属性的包含Set-Cookie的请求。</li>
+<li><strong>set-cookie-name</strong>：筛选出指定cookie名称属性的包含Set-Cookie的请求。</li>
+<li><strong>set-cookie-value</strong>：筛选出指定cookie值属性的包含Set-Cookie的请求。</li>
+<li><strong>status-code</strong>：筛选出指定HTTP状态码的请求。</li>
+</ul>
+<h2 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h2><p>Timeline的四个视图窗</p>
+<ul>
+<li><strong>Controls 工具栏</strong>：提供了录制，清除记录，配置录制过程中需要捕捉哪些数据的功能。</li>
+<li><strong>Overview 概览</strong>：页面性能的概览图，通过此图可以大致的分析页面。</li>
+<li><strong>Flame Chart 火焰图</strong>：展示了JavaScript的调用堆栈信息。其中蓝线表示DOMConentLoaded事件，绿线表示第一次绘制，红线表示load事件，由此也可以看出DOMContentLoaded事件比load事件要早不少。</li>
+<li><strong>Details 详情</strong>：选中某个事件，会显示该事件的信息，如果没有选中任何事件，就会显示选中时间区段的帧信息。</li>
+</ul>
+<h3 id="为什么是60帧"><a href="#为什么是60帧" class="headerlink" title="为什么是60帧"></a>为什么是60帧</h3><p>我们的目标是保证页面要有高于每秒60fps(帧)的刷新频率，这和目前大多数显示器的刷新率相吻合(60Hz)。如果网页动画能够做到每秒60帧，就会跟显示器同步刷新，达到最佳的视觉效果。这意味着，一秒之内进行60次重新渲染，每次重新渲染的时间不能超过16.66毫秒(包括：执行js，处理事件，修改DOM，更改样式和布局，绘制页面等。)</p>
+<h3 id="渲染分几步"><a href="#渲染分几步" class="headerlink" title="渲染分几步"></a>渲染分几步</h3><p><img src="https://developers.google.com/web/fundamentals/performance/rendering/images/intro/frame-full.jpg" alt="渲染分几步"></p>
+<ul>
+<li><strong>JavaScript</strong>：JavaScript实现动画效果，DOM元素操作等。</li>
+<li><strong>Style（计算样式）</strong>：确定每个DOM元素应该应用什么CSS规则。</li>
+<li><strong>Layout（布局）</strong>：计算每个DOM元素在最终屏幕上显示的大小和位置。由于web页面的元素布局是相对的，所以其中任意一个元素的位置发生变化，都会联动的引起其他元素发生变化，这个过程叫reflow。</li>
+<li><strong>Paint（绘制）</strong>：在多个层上绘制DOM元素的的文字、颜色、图像、边框和阴影等。</li>
+<li><strong>Composite（渲染层合并）</strong>：按照合理的顺序合并图层然后显示到屏幕上。</li>
+</ul>
+<h3 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h3><h4 id="requestAnimationFrame"><a href="#requestAnimationFrame" class="headerlink" title="requestAnimationFrame"></a><strong><em>requestAnimationFrame</em></strong></h4><p> <em>跟着浏览器的绘制走，如果浏览设备绘制间隔是16.7ms，那我就这个间隔绘制；如果浏览设备绘制间隔是10ms，我就10ms绘制</em></p>
+<hr>
+<h4 id="Web-Workers"><a href="#Web-Workers" class="headerlink" title="Web Workers"></a><strong><em>Web Workers</em></strong></h4><p> <em>在后台单独起一个线程来执行JS，不占用浏览器主线程，可以针对耗时且不操作dom的JS文件</em></p>
+<hr>
+<h4 id="使用flexbox代替传统布局"><a href="#使用flexbox代替传统布局" class="headerlink" title="使用flexbox代替传统布局"></a><strong><em>使用flexbox代替传统布局</em></strong></h4><p> <em>同样对1300个元素的布局，传统DIV布局13.7ms，flexbox仅需3.4ms</em></p>
+<hr>
+<h4 id="避免强制同步布局"><a href="#避免强制同步布局" class="headerlink" title="避免强制同步布局"></a><strong><em>避免强制同步布局</em></strong></h4><p><em>优化插件：fastdom</em></p>
+<hr>
+<h4 id="提升动画效果中的元素"><a href="#提升动画效果中的元素" class="headerlink" title="提升动画效果中的元素"></a><strong><em>提升动画效果中的元素</em></strong></h4><p><em>耗电</em></p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://DXY-Biz-Team.github.io/2016/08/chrome-performance-analysis-1/" data-id="cirvenk2r00002fxufj2s0gi1" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2016/05/2016/05-19-about-composer/" class="next">使用composer管理依赖</a></div><div id="disqus_thread"><script>var disqus_shortname = 'dxy-biz-developer';
+var disqus_identifier = '2016/08/chrome-performance-analysis-1/';
+var disqus_title = 'Chrome程序性能分析-来自于一次组内分享';
+var disqus_url = 'http://DXY-Biz-Team.github.io/2016/08/chrome-performance-analysis-1/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//dxy-biz-developer.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://DXY-Biz-Team.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/UMD/" style="font-size: 15px;">UMD</a> <a href="/tags/Mac-Software-Guide/" style="font-size: 15px;">Mac Software Guide</a> <a href="/tags/Developer/" style="font-size: 15px;">Developer</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/ES2015/" style="font-size: 15px;">ES2015</a> <a href="/tags/ES6/" style="font-size: 15px;">ES6</a> <a href="/tags/Tools/" style="font-size: 15px;">Tools</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/SVG/" style="font-size: 15px;">SVG</a> <a href="/tags/animation/" style="font-size: 15px;">animation</a> <a href="/tags/动画/" style="font-size: 15px;">动画</a> <a href="/tags/composer/" style="font-size: 15px;">composer</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/08/chrome-performance-analysis-1/">Chrome程序性能分析-来自于一次组内分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/2016/05-19-about-composer/">使用composer管理依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/svg-path-animation/">SVG 路径动画</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/biz-front-end-use-skill/">丁香园（E-marketing项目使用技巧,持续更新中）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/things-about-npm-front-end-modules/">关于 npm 前端模块的那点儿事儿（ES2015, Babel, UMD）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/sublime-text-setting-guide/">Sublime Text 2 & 3 配置指南 (MSG.01)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/hello-world/">Hello World</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//dxy-biz-developer.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.dxy.cn" title="丁香园" target="_blank">丁香园</a><ul></ul><a href="http://dxy.com/" title="丁香医生" target="_blank">丁香医生</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">DXY Biz Developer.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-75363891-1','auto');ga('send','pageview');
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

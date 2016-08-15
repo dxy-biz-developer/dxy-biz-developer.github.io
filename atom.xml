@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://DXY-Biz-Team.github.io/"/>
-  <updated>2016-05-19T15:12:09.237Z</updated>
+  <updated>2016-08-15T02:12:19.347Z</updated>
   <id>http://DXY-Biz-Team.github.io/</id>
   
   <author>
@@ -14,6 +14,101 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Chrome程序性能分析-来自于一次组内分享</title>
+    <link href="http://DXY-Biz-Team.github.io/2016/08/chrome-performance-analysis-1/"/>
+    <id>http://DXY-Biz-Team.github.io/2016/08/chrome-performance-analysis-1/</id>
+    <published>2016-08-15T01:59:44.000Z</published>
+    <updated>2016-08-15T02:12:19.347Z</updated>
+    
+    <content type="html">&lt;p&gt;对于一次组内分享的整理，PPT资源放在了我的个人github pages上&lt;a href=&quot;http://zanseven007.github.io/chrome-performance&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;点击这里查看&lt;/a&gt;（建议Timeline的时候使用隐身模式避免插件影响，快捷键command+shift+n）&lt;/p&gt;
+&lt;h1 id=&quot;Chrome-程序性能分析&quot;&gt;&lt;a href=&quot;#Chrome-程序性能分析&quot; class=&quot;headerlink&quot; title=&quot;Chrome 程序性能分析&quot;&gt;&lt;/a&gt;Chrome 程序性能分析&lt;/h1&gt;&lt;h2 id=&quot;Network&quot;&gt;&lt;a href=&quot;#Network&quot; class=&quot;headerlink&quot; title=&quot;Network&quot;&gt;&lt;/a&gt;Network&lt;/h2&gt;&lt;p&gt;Network主要有5个视窗，分别有不同的功能：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Controls 工具栏&lt;/strong&gt;：用来控制Network的功能及外观。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Filters 筛选栏&lt;/strong&gt;：根据筛选条件筛选请求列表，按住command/ctrl键可多选。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Overviews 概览&lt;/strong&gt;：资源被加载过来的时间线，如果多条时间线垂直堆叠，表示多个资源被并行加载。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Request Table 请求列表&lt;/strong&gt;：该视窗列出了所有的资源请求，默认按时间顺序排序，点击某个资源，可以查看更详细的信息。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Summary 总览&lt;/strong&gt;：汇总了请求数量，传输数据大小，加载时间等信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;默认情况下，Request Table 请求列表展示如下信息，当然，在请求列表的表头右键可以配置请求列表显示的内容。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Nam&lt;/strong&gt;e：资源的名称。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Status&lt;/strong&gt;：HTTP的状态码。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Type&lt;/strong&gt;：资源的MIME类型。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Initiator&lt;/strong&gt;：表示请求的上游，即发起者。Parser表示是HTML解析器发起的请求；Redirect表示是HTTP跳转发起的请求；Script表示是由脚本发起的请求；Other表示是由其他动作发起的请求，比如用户跳转或者在导航栏输入地址等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Size&lt;/strong&gt;：请求的大小，包括响应头和响应体的内容。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time&lt;/strong&gt;：请求的时间，从请求开始到请求完全结束。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Timeline&lt;/strong&gt;：请求的时间线。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;浏览器拿到网页后加载过程&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;解析HTML结构。&lt;/li&gt;
+&lt;li&gt;加载外部脚本和样式表文件。&lt;/li&gt;
+&lt;li&gt;解析并执行脚本代码。// 部分脚本会阻塞页面的加载&lt;/li&gt;
+&lt;li&gt;DOM树构建完成。//DOMContentLoaded 事件&lt;/li&gt;
+&lt;li&gt;加载图片等外部文件。&lt;/li&gt;
+&lt;li&gt;页面加载完毕。//load 事件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;请求上下游&lt;/p&gt;
+&lt;p&gt;按住Shift查看资源请求上下游&lt;br&gt;其中绿色请求表示common.js的上游请求，即谁触发了V20160804a.js请求，红色请求表示common.js的下游请求，即common.js又触发了什么请求。&lt;br&gt;&lt;img src=&quot;http://obw56kbo5.bkt.clouddn.com/pic.png&quot; alt=&quot;上下游&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Timeline可以重新排序，主要有如下几个维度。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Timline - Start Time&lt;/strong&gt;：按请求的发起时间排序。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Timline - Response Time&lt;/strong&gt;：按请求的响应时间排序。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Timline - End Time&lt;/strong&gt;：按请求的结束时间排序。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Timline - Total Duration&lt;/strong&gt;：按请求的总耗时排序，可以快捷的找出耗时最多的资源。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Timline - Latency&lt;/strong&gt;：按请求的延迟排序，延迟是指请求发起的时间到响应开始的时间，可以快捷的找出请求等待时间最长（TTFB）的资源。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;强大的过滤器功能&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;domain&lt;/strong&gt;：筛选出指定域名的请求，不仅支持自动补全，还支持*匹配。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;has-response-header&lt;/strong&gt;：筛选出包含指定响应头的请求。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;is&lt;/strong&gt;：通过is:running找出WebSocket请求。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;larger-than&lt;/strong&gt;：筛选出请求大于指定字节大小的请求，其中1000表示1k。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;method&lt;/strong&gt;：筛选出指定HTTP方法的请求，比如GET请求、POST请求等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;mime-type&lt;/strong&gt;：筛选出指定文件类型的请求。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;scheme&lt;/strong&gt;：筛选出指定协议的请求，比如scheme:http、scheme:https。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;set-cookie-domain&lt;/strong&gt;：筛选出指定cookie域名属性的包含Set-Cookie的请求。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;set-cookie-name&lt;/strong&gt;：筛选出指定cookie名称属性的包含Set-Cookie的请求。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;set-cookie-value&lt;/strong&gt;：筛选出指定cookie值属性的包含Set-Cookie的请求。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;status-code&lt;/strong&gt;：筛选出指定HTTP状态码的请求。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Timeline&quot;&gt;&lt;a href=&quot;#Timeline&quot; class=&quot;headerlink&quot; title=&quot;Timeline&quot;&gt;&lt;/a&gt;Timeline&lt;/h2&gt;&lt;p&gt;Timeline的四个视图窗&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Controls 工具栏&lt;/strong&gt;：提供了录制，清除记录，配置录制过程中需要捕捉哪些数据的功能。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Overview 概览&lt;/strong&gt;：页面性能的概览图，通过此图可以大致的分析页面。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flame Chart 火焰图&lt;/strong&gt;：展示了JavaScript的调用堆栈信息。其中蓝线表示DOMConentLoaded事件，绿线表示第一次绘制，红线表示load事件，由此也可以看出DOMContentLoaded事件比load事件要早不少。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Details 详情&lt;/strong&gt;：选中某个事件，会显示该事件的信息，如果没有选中任何事件，就会显示选中时间区段的帧信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;为什么是60帧&quot;&gt;&lt;a href=&quot;#为什么是60帧&quot; class=&quot;headerlink&quot; title=&quot;为什么是60帧&quot;&gt;&lt;/a&gt;为什么是60帧&lt;/h3&gt;&lt;p&gt;我们的目标是保证页面要有高于每秒60fps(帧)的刷新频率，这和目前大多数显示器的刷新率相吻合(60Hz)。如果网页动画能够做到每秒60帧，就会跟显示器同步刷新，达到最佳的视觉效果。这意味着，一秒之内进行60次重新渲染，每次重新渲染的时间不能超过16.66毫秒(包括：执行js，处理事件，修改DOM，更改样式和布局，绘制页面等。)&lt;/p&gt;
+&lt;h3 id=&quot;渲染分几步&quot;&gt;&lt;a href=&quot;#渲染分几步&quot; class=&quot;headerlink&quot; title=&quot;渲染分几步&quot;&gt;&lt;/a&gt;渲染分几步&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;https://developers.google.com/web/fundamentals/performance/rendering/images/intro/frame-full.jpg&quot; alt=&quot;渲染分几步&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;JavaScript&lt;/strong&gt;：JavaScript实现动画效果，DOM元素操作等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Style（计算样式）&lt;/strong&gt;：确定每个DOM元素应该应用什么CSS规则。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Layout（布局）&lt;/strong&gt;：计算每个DOM元素在最终屏幕上显示的大小和位置。由于web页面的元素布局是相对的，所以其中任意一个元素的位置发生变化，都会联动的引起其他元素发生变化，这个过程叫reflow。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Paint（绘制）&lt;/strong&gt;：在多个层上绘制DOM元素的的文字、颜色、图像、边框和阴影等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Composite（渲染层合并）&lt;/strong&gt;：按照合理的顺序合并图层然后显示到屏幕上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;优化方法&quot;&gt;&lt;a href=&quot;#优化方法&quot; class=&quot;headerlink&quot; title=&quot;优化方法&quot;&gt;&lt;/a&gt;优化方法&lt;/h3&gt;&lt;h4 id=&quot;requestAnimationFrame&quot;&gt;&lt;a href=&quot;#requestAnimationFrame&quot; class=&quot;headerlink&quot; title=&quot;requestAnimationFrame&quot;&gt;&lt;/a&gt;&lt;strong&gt;&lt;em&gt;requestAnimationFrame&lt;/em&gt;&lt;/strong&gt;&lt;/h4&gt;&lt;p&gt; &lt;em&gt;跟着浏览器的绘制走，如果浏览设备绘制间隔是16.7ms，那我就这个间隔绘制；如果浏览设备绘制间隔是10ms，我就10ms绘制&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;Web-Workers&quot;&gt;&lt;a href=&quot;#Web-Workers&quot; class=&quot;headerlink&quot; title=&quot;Web Workers&quot;&gt;&lt;/a&gt;&lt;strong&gt;&lt;em&gt;Web Workers&lt;/em&gt;&lt;/strong&gt;&lt;/h4&gt;&lt;p&gt; &lt;em&gt;在后台单独起一个线程来执行JS，不占用浏览器主线程，可以针对耗时且不操作dom的JS文件&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;使用flexbox代替传统布局&quot;&gt;&lt;a href=&quot;#使用flexbox代替传统布局&quot; class=&quot;headerlink&quot; title=&quot;使用flexbox代替传统布局&quot;&gt;&lt;/a&gt;&lt;strong&gt;&lt;em&gt;使用flexbox代替传统布局&lt;/em&gt;&lt;/strong&gt;&lt;/h4&gt;&lt;p&gt; &lt;em&gt;同样对1300个元素的布局，传统DIV布局13.7ms，flexbox仅需3.4ms&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;避免强制同步布局&quot;&gt;&lt;a href=&quot;#避免强制同步布局&quot; class=&quot;headerlink&quot; title=&quot;避免强制同步布局&quot;&gt;&lt;/a&gt;&lt;strong&gt;&lt;em&gt;避免强制同步布局&lt;/em&gt;&lt;/strong&gt;&lt;/h4&gt;&lt;p&gt;&lt;em&gt;优化插件：fastdom&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;提升动画效果中的元素&quot;&gt;&lt;a href=&quot;#提升动画效果中的元素&quot; class=&quot;headerlink&quot; title=&quot;提升动画效果中的元素&quot;&gt;&lt;/a&gt;&lt;strong&gt;&lt;em&gt;提升动画效果中的元素&lt;/em&gt;&lt;/strong&gt;&lt;/h4&gt;&lt;p&gt;&lt;em&gt;耗电&lt;/em&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对于一次组内分享的整理，PPT资源放在了我的个人github pages上&lt;a href=&quot;http://zanseven007.github.io/chrome-performance&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;点击这里查看&lt;/a&gt;（
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>使用composer管理依赖</title>
